@@ -1,5 +1,4 @@
 # Velato
-Velato language - write music with midi
 
 Velato is a language where one writes code with music, in the form of a MIDI file. Read more on esolangs: http://esolangs.org/wiki/Velato
 
