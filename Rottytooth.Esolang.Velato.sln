@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rottytooth.Esolang.Velato", "Rottytooth.Esolang.Velato\Rottytooth.Esolang.Velato.csproj", "{EE8B1987-FE98-414E-BE9C-3D8441023EA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{3F8A99C4-726A-4DF1-9BDF-D2B690C0B35B}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\NAudio.dll = Lib\NAudio.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rottytooth.Esolang.Velato.Tests", "Rottytooth.Esolang.Velato.Tests\Rottytooth.Esolang.Velato.Tests.csproj", "{2872D84A-BCE1-45DB-AC69-C4BBC9DEC49C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lilypond", "Lilypond", "{A1FE7946-2AAD-4210-B249-3330166F96D8}"
+	ProjectSection(SolutionItems) = preProject
+		Lilypond\print_he.ly = Lilypond\print_he.ly
+		Lilypond\print_he.mid = Lilypond\print_he.mid
+		Lilypond\print_he.pdf = Lilypond\print_he.pdf
+		Lilypond\print_hello_world.ly = Lilypond\print_hello_world.ly
+		Lilypond\print_hello_world.mid = Lilypond\print_hello_world.mid
+		Lilypond\print_hello_world_chords.ly = Lilypond\print_hello_world_chords.ly
+		Lilypond\print_hello_world_chords.mid = Lilypond\print_hello_world_chords.mid
+		Lilypond\print_hello_world_chords.pdf = Lilypond\print_hello_world_chords.pdf
+		Lilypond\print_hello_world_chords_2hands.pdf = Lilypond\print_hello_world_chords_2hands.pdf
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE8B1987-FE98-414E-BE9C-3D8441023EA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE8B1987-FE98-414E-BE9C-3D8441023EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE8B1987-FE98-414E-BE9C-3D8441023EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE8B1987-FE98-414E-BE9C-3D8441023EA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2872D84A-BCE1-45DB-AC69-C4BBC9DEC49C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2872D84A-BCE1-45DB-AC69-C4BBC9DEC49C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2872D84A-BCE1-45DB-AC69-C4BBC9DEC49C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2872D84A-BCE1-45DB-AC69-C4BBC9DEC49C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
