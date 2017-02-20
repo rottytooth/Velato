@@ -34,53 +34,63 @@ namespace Rottytooth.Esolang.Velato
 
         private const string HelpText = "";
 
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            MidiLoader loader = new MidiLoader();
-
-            GetPathAndOptions(args);
-
-            FileInfo codeFile = new FileInfo(Path);
-            string programName = codeFile.Name;
-
-            loader.Load(Path);
-
-            foreach (Note note in loader.Notes)
+            try
             {
-                Console.WriteLine(note.Name + "\t" + note.Number.ToString());
+                MidiLoader loader = new MidiLoader();
 
-                Console.WriteLine(Math.Round(note.PitchCorrection * loader.SmallestInterval) + "/" + loader.SmallestInterval.ToString());
+                GetPathAndOptions(args);
 
-            }
-            Console.WriteLine("smallest tone: 1/" + loader.SmallestInterval.ToString());
+                FileInfo codeFile = new FileInfo(Path);
+                string programName = codeFile.Name;
 
-            Parser parser = new Parser(loader.Notes, loader.SmallestInterval);
-            List<CommandToken> tokens = parser.Parse();
+                loader.Load(Path);
 
-            CodeGenerator codeGenerator = new CodeGenerator(tokens, programName);
-
-            if (ToJavascript)
-            {
-                FileInfo jsFile = new FileInfo(programName + ".js");
-                using (StreamWriter writer = jsFile.CreateText())
+                int count = 1;
+                foreach (Note note in loader.Notes)
                 {
-                    writer.Write(codeGenerator.GenerateJavaScript());
-                    writer.Flush();
+                    Console.Write("Note #" + count.ToString("D6"));
+                    Console.Write("\t" + note.Name + "\t" + note.Number.ToString());
+                    Console.WriteLine("\t" + Math.Round(note.PitchCorrection * loader.SmallestInterval) + "/" + loader.SmallestInterval.ToString());
+                    count++;
+                }
+                Console.WriteLine("smallest tone: 1/" + loader.SmallestInterval.ToString());
+
+                Parser parser = new Parser(loader.Notes, loader.SmallestInterval);
+                List<CommandToken> tokens = parser.Parse();
+
+                CodeGenerator codeGenerator = new CodeGenerator(tokens, programName);
+
+                if (ToJavascript)
+                {
+                    FileInfo jsFile = new FileInfo(programName + ".js");
+                    using (StreamWriter writer = jsFile.CreateText())
+                    {
+                        writer.Write(codeGenerator.GenerateJavaScript());
+                        writer.Flush();
+                    }
+                }
+                if (ToCSharp)
+                {
+                    FileInfo csFile = new FileInfo(programName + ".cs");
+                    using (StreamWriter writer = csFile.CreateText())
+                    {
+                        writer.Write(codeGenerator.GenerateCSharp());
+                        writer.Flush();
+                    }
+                }
+                if (Compile)
+                {
+                    codeGenerator.GenerateFile();
                 }
             }
-            if (ToCSharp)
+            catch(Exception ex)
             {
-                FileInfo csFile = new FileInfo(programName + ".cs");
-                using (StreamWriter writer = csFile.CreateText())
-                {
-                    writer.Write(codeGenerator.GenerateCSharp());
-                    writer.Flush();
-                }
+                Console.Error.Write(ex);
+                return ex.GetHashCode();
             }
-            if (Compile)
-            {
-                codeGenerator.GenerateFile();
-            }
+            return 0;
         }
 
         static void GetPathAndOptions(string[] args)

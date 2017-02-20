@@ -4,24 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rottytooth.Esolang.Velato;
 
-namespace Rottytooth.Esolang.Velato.Tests
+namespace Rottytooth.Esolang.Velato.UnitTests
 {
     [TestClass]
-    class Program
+    public class CompilerTests
     {
-        static void Main(string[] args)
-        {
-            // These only test whether the programs build, not whether they perform as expected
-
-            //BuildHelloWorld();
-
-            BuildHelloWorldChords();
-        }
+        // NOTE: These only test whether the programs build, not whether they perform as expected
 
         [TestMethod]
-        static void BuildHelloWorld()
+        public void BuildHelloWorld()
         {
             MidiLoader loader = new MidiLoader();
             loader.Load("../../../Lilypond/print_hello_world.mid");
@@ -32,7 +24,7 @@ namespace Rottytooth.Esolang.Velato.Tests
         }
 
         [TestMethod]
-        static void BuildHelloWorldChords()
+        public void BuildHelloWorldChords()
         {
             MidiLoader loader = new MidiLoader();
             loader.Load("../../../Lilypond/print_hello_world_chords.mid");

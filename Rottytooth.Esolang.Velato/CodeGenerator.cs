@@ -114,7 +114,7 @@ namespace Rottytooth.Esolang.Velato
                     case CommandType.Let:
                         if (token.VariableName == null)
                         {
-                            throw new CompilerException("Declare command with no varaible name");
+                            throw new CompilerException("Declare command with no variable name");
                         }
                         string letVariableName = token.VariableName.Name + token.VariableName.Number;
                         program.Append(letVariableName + " = ");
@@ -139,6 +139,22 @@ namespace Rottytooth.Esolang.Velato
                         {
                             program.AppendLine(");");
                         }
+                        break;
+                    case CommandType.Input:
+                        if (token.VariableName == null)
+                        {
+                            throw new CompilerException("Input command with no variable name");
+                        }
+                        string inputVariableName = token.VariableName.Name + token.VariableName.Number;
+                        if (js)
+                        {
+                            program.AppendLine(inputVariableName + " = prompt('Input', 'Input');");
+                        }
+                        else
+                        {
+                            program.AppendLine(inputVariableName + " = Console.ReadLine();");
+                        }
+
                         break;
                     case CommandType.While:
                         program.Append("while (");
@@ -229,11 +245,10 @@ namespace Rottytooth.Esolang.Velato
 
         public bool Compile(ref string errors)
         {
-            ;
             CSharpCodeProvider csc =
-                new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
+                new CSharpCodeProvider(new Dictionary<string, string>());
             CompilerParameters parameters = new CompilerParameters(new[] { "mscorlib.dll", "System.Core.dll" },
-                this.ProgramName, true);
+                this.ProgramName + ".exe", true);
             parameters.GenerateExecutable = true;
 
             string entireProgram =

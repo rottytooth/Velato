@@ -13,6 +13,7 @@ namespace Rottytooth.Esolang.Velato.Tokens
         While,
         If,
         Print,
+        Input,
         EndWhile,
         EndIf,
         Else

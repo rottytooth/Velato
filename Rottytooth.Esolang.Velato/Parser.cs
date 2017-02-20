@@ -171,7 +171,7 @@ namespace Rottytooth.Esolang.Velato
                     index++;
                     return ParseSpecialCommand(ref index);
                 default:
-                    throw new SyntaxError("Invalid first interval of command", commandInterval, index);
+                    throw new SyntaxError("Invalid first interval of command", commandInterval, index, Notes[index].Name);
             }
         }
 
@@ -240,7 +240,7 @@ namespace Rottytooth.Esolang.Velato
                         CommandType = CommandType.EndIf
                     };
                 default:
-                    throw new SyntaxError("Could not determine block command with interval",commandInterval, index);
+                    throw new SyntaxError("Could not determine block command with interval", commandInterval, index);
             }
         }
 
@@ -250,13 +250,24 @@ namespace Rottytooth.Esolang.Velato
 
             switch (commandInterval % 12)
             {
+                case PERFECT_FOURTH:
+                    // print command
+                    index++; // get next index
+                    CommandToken inputCommand = new CommandToken()
+                    {
+                        CommandType = CommandType.Input,
+                        VariableName = Notes[index]
+                    };
+                    index++;
+                    inputCommand.ChildExpressions.Add(ParseExpression(ref index));
+                    return inputCommand;
                 case PERFECT_FIFTH:
                     // print command
                     CommandToken printCommand = new CommandToken()
                     {
                         CommandType = CommandType.Print
                     };
-                    index ++;
+                    index++;
                     printCommand.ChildExpressions.Add(ParseExpression(ref index));
                     return printCommand;
                 default:
