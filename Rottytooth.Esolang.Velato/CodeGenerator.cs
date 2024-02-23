@@ -152,7 +152,7 @@ namespace Rottytooth.Esolang.Velato
                         }
                         else
                         {
-                            program.AppendLine(inputVariableName + " = Console.ReadLine();");
+                            program.AppendLine(inputVariableName + " = Console.ReadKey().KeyChar;");
                         }
 
                         break;

@@ -6,24 +6,23 @@
 }
 
 maintrack = { 
-	\key f \major
+	\key c \major
 	\time 4/4 
+	% declare variable E
 	c'
 	aes'
-	e''
-	e' 
-	e''
-	a'
-	f'
-	e''
-	a'
-	g'
-	ees' % or e'
-	des' % or d'
-	e''
-	e'
-	f' 2~
-	f' 1
+	e
+	e
+	% input to E
+	a
+	a
+	e
+	% print E to screen
+	a
+	g
+	e
+	d
+	e
 }
 
 harmonize = {

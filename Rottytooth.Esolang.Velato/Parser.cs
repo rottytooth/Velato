@@ -165,7 +165,7 @@ namespace Rottytooth.Esolang.Velato
                         VariableName = Notes[index + 1],
                         Type = ParseType(index + 2)
                     };
-                    index += 2; // get next index
+                    index += 3; // get next index
                     return declareCommand;
                 case MAJOR_SIXTH: // major sixth^
                     index++;
@@ -251,7 +251,8 @@ namespace Rottytooth.Esolang.Velato
             switch (commandInterval % 12)
             {
                 case PERFECT_FOURTH:
-                    // print command
+                case MAJOR_SIXTH:
+                    // input command
                     index++; // get next index
                     CommandToken inputCommand = new CommandToken()
                     {
@@ -259,7 +260,6 @@ namespace Rottytooth.Esolang.Velato
                         VariableName = Notes[index]
                     };
                     index++;
-                    inputCommand.ChildExpressions.Add(ParseExpression(ref index));
                     return inputCommand;
                 case PERFECT_FIFTH:
                     // print command
@@ -344,6 +344,7 @@ namespace Rottytooth.Esolang.Velato
                             // name of variable (single note)
                             index++;
                             Note variableName = Notes[index];
+                            index++;
                             return new ExpressionToken()
                             {
                                 ExpressionType = ExpressionType.Variable,
@@ -488,31 +489,6 @@ namespace Rottytooth.Esolang.Velato
                                         GetIntervalName(secondInterval), thirdInterval, index);
                             }
 
-                        //case MINOR_SEVENTH:
-                        //case MAJOR_SEVENTH:
-                        //    // exponential / other operations
-                        //    index++;
-                        //    thirdInterval = GetInterval(index);
-                        //    switch (thirdInterval)
-                        //    {
-                        //        case MINOR_SECOND:
-                        //        case MAJOR_SECOND:
-                        //            return new ExpressionToken()
-                        //            {
-                        //                ExpressionType = ExpressionType.Power
-                        //            };
-
-                        //        case MINOR_THIRD:
-                        //        case MAJOR_THIRD:
-                        //            return new ExpressionToken()
-                        //            {
-                        //                ExpressionType = ExpressionType.Log
-                        //            };
-                        //        default:
-                        //            throw new SyntaxError("Could not determine expression with " +
-                        //                GetIntervalName(expressionInterval) + " followed by " +
-                        //                GetIntervalName(secondInterval), thirdInterval, index);
-                        //    }
                         default:
                             throw new SyntaxError("Could not determine expression with " +
                                 GetIntervalName(expressionInterval) + " followed by", secondInterval, index);
@@ -565,11 +541,12 @@ namespace Rottytooth.Esolang.Velato
                 currentInterval = GetInterval(index);
                 if (currentInterval % 12 < PERFECT_FIFTH)
                 {
-                    retDigits.Append(currentInterval.ToString());
+                    // Starts with flat second
+                    retDigits.Append((currentInterval - 1).ToString());
                 }
                 else if (currentInterval % 12 > PERFECT_FIFTH)
                 {
-                    retDigits.Append((currentInterval - 1).ToString());
+                    retDigits.Append((currentInterval - 2).ToString());
                 }
             }
 
