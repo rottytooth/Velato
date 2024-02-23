@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rottytooth.Esolang.Velato", "Rottytooth.Esolang.Velato\Rottytooth.Esolang.Velato.csproj", "{EE8B1987-FE98-414E-BE9C-3D8441023EA8}"
 EndProject
@@ -14,11 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lilypond", "Lilypond", "{A1
 	ProjectSection(SolutionItems) = preProject
 		Lilypond\copy_input_to_output.ly = Lilypond\copy_input_to_output.ly
 		Lilypond\copy_input_to_output.mid = Lilypond\copy_input_to_output.mid
-		Lilypond\copy_input_to_output.pdf = Lilypond\copy_input_to_output.pdf
+		Lilypond\hi.ly = Lilypond\hi.ly
 		Lilypond\print_hello_world_chords.ly = Lilypond\print_hello_world_chords.ly
 		Lilypond\print_hello_world_chords.mid = Lilypond\print_hello_world_chords.mid
-		Lilypond\print_hello_world_chords.mid.exe = Lilypond\print_hello_world_chords.mid.exe
-		Lilypond\print_hello_world_chords.pdf = Lilypond\print_hello_world_chords.pdf
 		Lilypond\print_hello_world_chords_psuedocode.txt = Lilypond\print_hello_world_chords_psuedocode.txt
 	EndProjectSection
 EndProject
