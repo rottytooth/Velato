@@ -24,12 +24,12 @@ This is in Lilypond format. It needs to be converted to a MIDI file to be read b
       c			% set root
       a g			% print
       e f			% a character 
-      a dis		        % value of H
+      a dis		        % value of 'H' (72) 
       g			% end of char marker
       c			% the root note does nothing the second time but can be used between commands
       a g			% print
       e f			% a character 
-      d cis fis	        % value of i
+      d cis fis	        % value of 'i' (105)
       g			% end of char marker
       c			% an extra c because why not
     }
