@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rottytooth.Esolang.Velato.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,14 @@ namespace Rottytooth.Esolang.Velato
         public string Name { get; set; }
 
         public double Pitch { get; set; }
+
+        public string Var { get
+            {
+                string name = this.Name + this.Number.ToString();
+                name = name.Replace("#", "s");
+                return name;
+            } 
+        }
 
         public double PitchCorrection { get; set; }
 

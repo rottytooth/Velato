@@ -10,14 +10,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{3F8A99C4-726
 		Lib\NAudio.dll = Lib\NAudio.dll
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lilypond", "Lilypond", "{A1FE7946-2AAD-4210-B249-3330166F96D8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Programs", "Programs", "{A1FE7946-2AAD-4210-B249-3330166F96D8}"
 	ProjectSection(SolutionItems) = preProject
-		Lilypond\copy_input_to_output.ly = Lilypond\copy_input_to_output.ly
-		Lilypond\copy_input_to_output.mid = Lilypond\copy_input_to_output.mid
-		Lilypond\hi.ly = Lilypond\hi.ly
-		Lilypond\print_hello_world_chords.ly = Lilypond\print_hello_world_chords.ly
-		Lilypond\print_hello_world_chords.mid = Lilypond\print_hello_world_chords.mid
-		Lilypond\print_hello_world_chords_psuedocode.txt = Lilypond\print_hello_world_chords_psuedocode.txt
+		Programs\copy_input_to_output.ly = Programs\copy_input_to_output.ly
+		Programs\copy_input_to_output.mid = Programs\copy_input_to_output.mid
+		Programs\hi.ly = Programs\hi.ly
+		Programs\hi.mid = Programs\hi.mid
+		Programs\print_he.ly = Programs\print_he.ly
+		Programs\print_he.mid = Programs\print_he.mid
+		Programs\print_he.pdf = Programs\print_he.pdf
+		Programs\print_hello_world.ly = Programs\print_hello_world.ly
+		Programs\print_hello_world.mid = Programs\print_hello_world.mid
+		Programs\print_hello_world_chords.ly = Programs\print_hello_world_chords.ly
+		Programs\print_hello_world_chords.mid = Programs\print_hello_world_chords.mid
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rottytooth.Esolang.Velato.Converter", "Rottytooth.Esolang.Velato.Converter\Rottytooth.Esolang.Velato.Converter.csproj", "{734C0E6F-8675-473E-B118-812A4FE73D87}"
@@ -51,5 +56,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2FC292AF-700E-4BFA-873C-D862F86C01F1}
 	EndGlobalSection
 EndGlobal

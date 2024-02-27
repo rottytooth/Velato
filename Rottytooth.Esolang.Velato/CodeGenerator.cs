@@ -75,24 +75,23 @@ namespace Rottytooth.Esolang.Velato
                         {
                             throw new CompilerException("Declare command with no varaible name");
                         }
-                        string variableName = token.VariableName.Name + token.VariableName.Number;
 
                         if (js)
                         {
-                            program.AppendLine("var " + variableName + ";");
+                            program.AppendLine("var " + token.VariableName.Var + ";");
                             break;
                         }
 
                         switch (token.Type)
                         {
                             case Velato.Tokens.Type.Int:
-                                program.AppendLine("int " + variableName + ";");
+                                program.AppendLine("int " + token.VariableName.Var + ";");
                                 break;
                             case Velato.Tokens.Type.Char:
-                                program.AppendLine("char " + variableName + ";");
+                                program.AppendLine("char " + token.VariableName.Var + ";");
                                 break;
                             case Velato.Tokens.Type.Double:
-                                program.AppendLine("double " + variableName + ";");
+                                program.AppendLine("double " + token.VariableName.Var + ";");
                                 break;
                         }
                         break;
@@ -116,8 +115,7 @@ namespace Rottytooth.Esolang.Velato
                         {
                             throw new CompilerException("Declare command with no variable name");
                         }
-                        string letVariableName = token.VariableName.Name + token.VariableName.Number;
-                        program.Append(letVariableName + " = ");
+                        program.Append(token.VariableName.Var + " = ");
                         UnpackExpressions(token.ChildExpressions, program, js);
                         program.AppendLine(";");
                         break;
@@ -145,14 +143,13 @@ namespace Rottytooth.Esolang.Velato
                         {
                             throw new CompilerException("Input command with no variable name");
                         }
-                        string inputVariableName = token.VariableName.Name + token.VariableName.Number;
                         if (js)
                         {
-                            program.AppendLine(inputVariableName + " = prompt('Input', 'Input');");
+                            program.AppendLine(token.VariableName.Var + " = prompt('Input', 'Input');");
                         }
                         else
                         {
-                            program.AppendLine(inputVariableName + " = Console.ReadKey().KeyChar;");
+                            program.AppendLine(token.VariableName.Var + " = Console.ReadKey().KeyChar;");
                         }
 
                         break;
