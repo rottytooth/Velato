@@ -233,8 +233,7 @@ namespace Rottytooth.Esolang.Velato
                         {
                             throw new CompilerException("Variable used with no varaible name");
                         }
-                        string variableName = token.VariableName.Name + token.VariableName.Number;
-                        program.Append(" " + variableName + " ");
+                        program.Append(" " + token.VariableName.Var + " ");
                         break;
                 }
             }
