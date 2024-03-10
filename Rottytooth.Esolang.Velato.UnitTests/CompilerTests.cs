@@ -71,6 +71,23 @@ namespace Rottytooth.Esolang.Velato.UnitTests
         }
 
         [TestMethod]
+        public void BuildWhile()
+        {
+            MidiLoader loader = new MidiLoader();
+            loader.Load("../../../Programs/while_test.mid");
+
+            Parser parser = new Parser(loader.Notes, loader.SmallestInterval);
+            CodeGenerator codeGenerator = new CodeGenerator(parser.Parse(), "Fugue");
+            codeGenerator.GenerateFile();
+            Assert.IsTrue(codeGenerator.GenerateFile());
+
+            string code = codeGenerator.GenerateCSharp();
+            string codeWithoutSpaces = Regex.Replace(code, @"\s", "");
+            Assert.IsTrue(codeWithoutSpaces.Contains("while(E452>0)"));
+            Assert.IsTrue(codeWithoutSpaces.Contains("Console.Write(E452);"));
+        }
+
+        [TestMethod]
         public void BuildHe()
         {
             MidiLoader loader = new MidiLoader();
