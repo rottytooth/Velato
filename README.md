@@ -2,8 +2,6 @@
 
 Velato is a language where one writes code with music, in the form of a MIDI file. Read more on esolangs: http://esolangs.org/wiki/Velato
 
-Current version: **[2.1](https://github.com/rottytooth/Velato/releases/tag/2.1.0)**
-
 ### Compiler Options
 Code | Option
 ---|---
