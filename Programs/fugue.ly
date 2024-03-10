@@ -15,12 +15,12 @@
   
   %fails to compile with this code
   d bes fis e %declare f#3 as int
-  f fis f a c a % let f#3 = 8
+  f fis f a c a % let f#3 = 9
   d b a f e fis % print f#3
   
   % will compile with this code
   %d bes f e %declare g#3 as int
-  %f f f a c a % let g#3 = 8
+  %f f f a c a % let g#3 = 9
   %d b a f e f % print g#3
   
   

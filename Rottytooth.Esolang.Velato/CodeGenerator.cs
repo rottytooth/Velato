@@ -66,7 +66,7 @@ namespace Rottytooth.Esolang.Velato
 
         private void UnpackCommands(List<CommandToken> commands, StringBuilder program, bool js)
         {
-            foreach (CommandToken token in Tokens)
+            foreach (CommandToken token in commands)
             {
                 switch (token.CommandType)
                 {
@@ -102,7 +102,7 @@ namespace Rottytooth.Esolang.Velato
                     case CommandType.EndIf:
                     case CommandType.EndWhile:
                         program.AppendLine("}");
-                        break;
+                        return;
                     case CommandType.If:
                         program.Append("if (");
                         UnpackExpressions(token.ChildExpressions, program, js);
@@ -156,9 +156,8 @@ namespace Rottytooth.Esolang.Velato
                     case CommandType.While:
                         program.Append("while (");
                         UnpackExpressions(token.ChildExpressions, program, js);
-                        program.AppendLine(") {");
+                        program.AppendLine(" {");
                         UnpackCommands(token.ChildCommands, program, js);
-                        program.AppendLine("}");
                         break;
                 }
             }

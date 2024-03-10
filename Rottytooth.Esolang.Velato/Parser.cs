@@ -82,7 +82,7 @@ namespace Rottytooth.Esolang.Velato
             {
                 commandInterval = Convert.ToInt32(pitchCorrectedInterval);
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 throw new CompilerException("Could not parse command: non-integer interval at note #" + index.ToString());
             }
@@ -149,14 +149,12 @@ namespace Rottytooth.Esolang.Velato
                         VariableName = Notes[index]
                     };
                     index++;
-                    letCommand.ChildExpressions.Add(ParseExpression(ref index));
+                    letCommand.ChildExpressions = ParseExpressionBlock(ref index);
                     return letCommand;
                 case MAJOR_THIRD:
                     // this indicates a block, need next note to determine type
                     index++;
-                    ParseBlock(ref index);
-
-                    return null;
+                    return ParseBlock(ref index);
                 case MINOR_SIXTH: // minor sixth
                     // declare
                     CommandToken declareCommand = new CommandToken()
@@ -185,20 +183,28 @@ namespace Rottytooth.Esolang.Velato
             {
                 case MAJOR_THIRD:
                     // while
+                    index++;
+                    var whileCondition = ParseExpressionBlock(ref index, true);
                     subCommands = new List<CommandToken>();
                     do
                     {
-                        index++;
                         subToken = ParseCommand(ref index);
-                        subCommands.Add(subToken);
+                        if (subToken != null)
+                        {
+                            // this can happen when the command is non-functional (e.g. a root change)
+                            subCommands.Add(subToken);
+                        }
                     } while (subToken == null || subToken.CommandType != CommandType.EndWhile);
+
                     return new CommandToken()
                     {
-                        CommandType = CommandType.Else,
+                        CommandType = CommandType.While,
+                        ChildExpressions = whileCondition,
                         ChildCommands = subCommands
                     };
                 case PERFECT_FOURTH:
                     // end while
+                    index++;
                     return new CommandToken()
                     {
                         CommandType = CommandType.EndWhile
@@ -215,7 +221,7 @@ namespace Rottytooth.Esolang.Velato
                         subToken.CommandType != CommandType.Else); // else will hold its own commands
                     return new CommandToken()
                     {
-                        CommandType = CommandType.Else,
+                        CommandType = CommandType.If,
                         ChildCommands = subCommands
                     };
                 case MAJOR_SIXTH:
@@ -268,11 +274,34 @@ namespace Rottytooth.Esolang.Velato
                         CommandType = CommandType.Print
                     };
                     index++;
-                    printCommand.ChildExpressions.Add(ParseExpression(ref index));
+                    printCommand.ChildExpressions = ParseExpressionBlock(ref index);
                     return printCommand;
                 default:
                     throw new SyntaxError("Could not determine special command with interval ", commandInterval, index);
             }
+        }
+
+        private List<ExpressionToken> ParseExpressionBlock(ref int index, bool impliedOpeningBracket=false)
+        {
+            var retBlock = new List<ExpressionToken>();
+            int openingTags = (impliedOpeningBracket ? 1 : 0); // how many expressions deep we are
+
+            do
+            {
+                var exp = ParseExpression(ref index);
+                if (exp.ExpressionType == ExpressionType.CloseParanthesis)
+                {
+                    openingTags--;
+                }
+                if (exp.ExpressionType == ExpressionType.OpenParanthesis)
+                {
+                    openingTags++;
+                }
+                retBlock.Add(exp);
+
+            } while (openingTags > 0);
+
+            return retBlock;
         }
 
         // while multi-interval commands are broken down into different functions, all the expressions are interpreted
@@ -295,35 +324,41 @@ namespace Rottytooth.Esolang.Velato
                     {
                         case MINOR_SECOND:
                         case MAJOR_SECOND:
+                            index++;
                             return new ExpressionToken()
                             {
                                 ExpressionType = ExpressionType.Equal
                             };
                         case MINOR_THIRD:
                         case MAJOR_THIRD:
+                            index++;
                             return new ExpressionToken()
                             {
                                 ExpressionType = ExpressionType.GreaterThan
                             };
                         case PERFECT_FOURTH:
+                            index++;
                             return new ExpressionToken()
                             {
                                 ExpressionType = ExpressionType.LessThan
                             };
                         case DIMINISHED_FIFTH:
                         case PERFECT_FIFTH:
+                            index++;
                             return new ExpressionToken()
                             {
                                 ExpressionType = ExpressionType.Not
                             };
                         case MINOR_SIXTH:
                         case MAJOR_SIXTH:
+                            index++;
                             return new ExpressionToken()
                             {
                                 ExpressionType = ExpressionType.And
                             };
                         case MINOR_SEVENTH:
                         case MAJOR_SEVENTH:
+                            index++;
                             return new ExpressionToken()
                             {
                                 ExpressionType = ExpressionType.Or
@@ -456,29 +491,34 @@ namespace Rottytooth.Esolang.Velato
                             {
                                 case MINOR_SECOND:
                                 case MAJOR_SECOND:
+                                    index++;
                                     return new ExpressionToken()
                                     {
                                         ExpressionType = ExpressionType.Minus
                                     };
                                 case MINOR_THIRD:
                                 case MAJOR_THIRD:
+                                    index++;
                                     return new ExpressionToken()
                                     {
                                         ExpressionType = ExpressionType.Plus
                                     };
                                 case PERFECT_FOURTH:
+                                    index++;
                                     return new ExpressionToken()
                                     {
                                         ExpressionType = ExpressionType.Divide
                                     };
                                 case DIMINISHED_FIFTH:
                                 case PERFECT_FIFTH:
+                                    index++;
                                     return new ExpressionToken()
                                     {
                                         ExpressionType = ExpressionType.Multiply
                                     };
                                 case MINOR_SIXTH:
                                 case MAJOR_SIXTH:
+                                    index++;
                                     return new ExpressionToken()
                                     {
                                         ExpressionType = ExpressionType.Mod
@@ -508,12 +548,14 @@ namespace Rottytooth.Esolang.Velato
                             {
                                 case MINOR_SECOND:
                                 case MAJOR_SECOND:
+                                    index++;
                                     return new ExpressionToken()
                                     {
                                         ExpressionType = ExpressionType.CloseParanthesis
                                     };
                                 case MINOR_SIXTH:
                                 case MAJOR_SIXTH:
+                                    index++;
                                     return new ExpressionToken()
                                     {
                                         ExpressionType = ExpressionType.OpenParanthesis
@@ -539,13 +581,19 @@ namespace Rottytooth.Esolang.Velato
             for(; currentInterval != PERFECT_FIFTH; index++)
             {
                 currentInterval = GetInterval(index);
-                if (currentInterval % 12 < PERFECT_FIFTH)
+                if (currentInterval % 12 == 0)
                 {
+                    // skip unison and do nothing
+                }
+                else if (currentInterval % 12 < PERFECT_FIFTH)
+                {
+                    if (currentInterval == 0) throw new SyntaxError("Digit is out of range", 0, index);
                     // Starts with flat second
                     retDigits.Append((currentInterval - 1).ToString());
                 }
                 else if (currentInterval % 12 > PERFECT_FIFTH)
                 {
+                    if (currentInterval < 2) throw new SyntaxError("Digit is out of range", 0, index);
                     retDigits.Append((currentInterval - 2).ToString());
                 }
             }
