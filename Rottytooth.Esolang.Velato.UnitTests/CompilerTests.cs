@@ -40,12 +40,22 @@ namespace Rottytooth.Esolang.Velato.UnitTests
         public void BuildHelloWorldChords()
         {
             MidiLoader loader = new MidiLoader();
-            loader.Load("../../../Programs/print_hello_world_chords.mid");
+            loader.Load("../../../Programs/print_h_5.mid");
 
             Parser parser = new Parser(loader.Notes, loader.SmallestInterval);
             CodeGenerator codeGenerator = new CodeGenerator(parser.Parse(), "HelloWorldChords");
-            codeGenerator.GenerateFile();
             Assert.IsTrue(codeGenerator.GenerateFile());
+
+            string code = codeGenerator.GenerateCSharp();
+            Assert.IsTrue(code.Contains("Console.Write('H');"));
+            Assert.IsTrue(code.Contains("Console.Write('e');"));
+            Assert.IsTrue(code.Contains("Console.Write('l');"));
+            Assert.IsTrue(code.Contains("Console.Write('o');"));
+            Assert.IsTrue(code.Contains("Console.Write('W');"));
+            Assert.IsTrue(code.Contains("Console.Write('d');"));
+            Assert.IsTrue(code.Contains("Console.Write('!');"));
+            Assert.IsTrue(code.Contains("Console.Write(',');"));
+            Assert.IsTrue(code.Contains("Console.Write(' ');"));
         }
 
         [TestMethod]
