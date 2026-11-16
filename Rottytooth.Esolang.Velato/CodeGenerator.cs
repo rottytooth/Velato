@@ -98,6 +98,7 @@ namespace Rottytooth.Esolang.Velato
 
                     case CommandType.Else:
                         program.AppendLine("} else {");
+                        UnpackCommands(token.ChildCommands, program, js);
                         break;
                     case CommandType.EndIf:
                     case CommandType.EndWhile:
@@ -106,9 +107,8 @@ namespace Rottytooth.Esolang.Velato
                     case CommandType.If:
                         program.Append("if (");
                         UnpackExpressions(token.ChildExpressions, program, js);
-                        program.AppendLine(") {");
+                        program.AppendLine(" {");
                         UnpackCommands(token.ChildCommands, program, js);
-                        program.AppendLine("}");
                         break;
                     case CommandType.Let:
                         if (token.VariableName == null)
