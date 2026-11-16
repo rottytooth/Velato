@@ -211,27 +211,35 @@ namespace Rottytooth.Esolang.Velato
                     };
                 case PERFECT_FIFTH:
                     // if
+                    index++;
+                    var ifCondition = ParseExpressionBlock(ref index, true);
                     subCommands = new List<CommandToken>();
                     do
                     {
-                        index++;
                         subToken = ParseCommand(ref index);
-                        subCommands.Add(subToken);
-                    } while (subToken == null || subToken.CommandType != CommandType.EndIf ||
+                        if (subToken != null)
+                        {
+                            subCommands.Add(subToken);
+                        }
+                    } while (subToken == null || subToken.CommandType != CommandType.EndIf &&
                         subToken.CommandType != CommandType.Else); // else will hold its own commands
                     return new CommandToken()
                     {
                         CommandType = CommandType.If,
+                        ChildExpressions = ifCondition,
                         ChildCommands = subCommands
                     };
                 case MAJOR_SIXTH:
                     // else
+                    index++;
                     subCommands = new List<CommandToken>();
                     do
                     {
-                        index++;
                         subToken = ParseCommand(ref index);
-                        subCommands.Add(subToken);
+                        if (subToken != null)
+                        {
+                            subCommands.Add(subToken);
+                        }
                     } while (subToken == null || subToken.CommandType != CommandType.EndIf);
 
                     return new CommandToken()
@@ -241,6 +249,7 @@ namespace Rottytooth.Esolang.Velato
                     };
                 case MAJOR_SEVENTH:
                     // end if
+                    index++;
                     return new CommandToken()
                     {
                         CommandType = CommandType.EndIf
