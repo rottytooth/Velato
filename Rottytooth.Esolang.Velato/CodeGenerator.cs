@@ -52,8 +52,6 @@ namespace Rottytooth.Esolang.Velato
 
             CSharp = program.ToString();
 
-            // Console.WriteLine(program.ToString()); // it is useful to see
-
             return program.ToString();
         }
 
